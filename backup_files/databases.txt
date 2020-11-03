@@ -1,0 +1,10 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pjymjhxz',
+        'USER': 'pjymjhxz',
+        'PASSWORD': 'g5NkyQcctFDtOUb-dsSkotutOHmCk6gK',
+        'HOST': 'lallah.db.elephantsql.com',
+        'PORT': '5432'
+    }
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>View Balances</title>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <h1>These are your balances, {{ user.username }}</h1>
+        <h2>Checking: {{ checking.balance }}</h2>
+        <h2>Savings: {{ savings.balance }}</h2>
+        {% else %}
+        <h1>Please log in first</h1>
+        {% endif %}
+    </body>
+</html>
