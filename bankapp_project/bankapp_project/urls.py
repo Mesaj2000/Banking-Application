@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication_system.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('view_balances.urls'))
+    path('', include('view_balances.urls')),
+    path('', include('send_money.urls'))
 ]

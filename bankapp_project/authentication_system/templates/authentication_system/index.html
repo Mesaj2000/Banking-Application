@@ -2,14 +2,17 @@
 <html lang='en'>
     <head>
         <meta charset='UTF-8'>
-        <title>Sample Index</title>
+        <title>Front Page</title>
     </head>
     <body>
-        <h1>This is the index w00t</h1>
+        <h1>Welcome to BankApp</h1>
         {% if user.is_authenticated %}
         <h2>Hello {{ user.username }}</h2>
+        <li><a href="/balances">View balances</a></li>
+        <li><a href="/send">Send money</a></li>
+        <li><a href="/accounts/logout">Logout</a></li>
         {% else %}
-        <h2>Please log in</h2>
+        <h2><a href="/accounts/login">Please log in</a></h2>
         {% endif %}
     </body>
 </html>
