@@ -4,8 +4,7 @@ from view_balances.models import Account
 from decimal import Decimal
 
 
-def transaction(target_username, from_account_number, amount):
-
+def transaction(current_user, target_username, from_account_number, amount):
     try:
         target_user = User.objects.get(username=target_username)
         target_account = Account.objects.get(user=target_user, preferred=True)
@@ -13,9 +12,10 @@ def transaction(target_username, from_account_number, amount):
         raise Exception("Target user does not exist")
 
     try:
-        from_account = Account.objects.get(id=from_account_number)
+        from_account = Account.objects.get(user=current_user,
+                                           id=from_account_number)
     except Exception:
-        raise Exception("'From account' does not exist")
+        raise Exception("Invalid selected sending account")
 
     if from_account.balance < amount:
         raise Exception("Insufficient funds")
@@ -42,25 +42,17 @@ def send_money(request):
             target_username = request.POST.get('target user field', None)
 
             from_account_number = request.POST.get('from account radio', None)
-            from_account_number = int(from_account_number)
+
+            try:
+                from_account_number = int(from_account_number)
+            except Exception:
+                raise Exception("Please select a sending account")
 
             amount = request.POST.get('amount field', None)
             amount = Decimal(amount)
 
-            transaction(target_username, from_account_number, amount)
-
-            """
-            target_user = User.objects.get(username=target_username)
-            target_account = Account.objects.get(user=target_user,
-                                                 preferred=True)
-
-            print(target_account)
-            print(amount)
-            print(type(amount))
-            target_account.balance += amount
-            print('how about here?')
-            target_account.save()
-            """
+            transaction(request.user, target_username,
+                        from_account_number, amount)
 
             context['sent'] = True
 
