@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from view_balances.models import Account
 from decimal import Decimal
@@ -28,6 +28,9 @@ def transaction(current_user, target_username, from_account_number, amount):
 
 
 def send_money(request):
+    if not request.user.is_authenticated:
+        return redirect('index')
+
     accounts = Account.objects.filter(user=request.user)
 
     context = {

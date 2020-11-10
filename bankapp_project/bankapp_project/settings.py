@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'authentication_system',
     'view_balances',
     'send_money',
+    'transaction_history',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
