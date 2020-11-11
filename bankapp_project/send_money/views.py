@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from view_balances.models import Account
 from decimal import Decimal
+from transaction_history.models import Transaction
+from datetime import datetime
 
 
 def transaction(current_user, target_username, from_account_number, amount):
@@ -22,9 +24,12 @@ def transaction(current_user, target_username, from_account_number, amount):
 
     from_account.balance -= amount
     target_account.balance += amount
+    transaction = Transaction(sender=from_account, receiver=target_account,
+                              time=datetime.now(), amount=amount)
 
     from_account.save()
     target_account.save()
+    transaction.save()
 
 
 def send_money(request):

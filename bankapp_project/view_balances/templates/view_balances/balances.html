@@ -8,7 +8,7 @@
         <h1>These are your balances, {{ user.username }}</h1>
 
         {% for account in accounts %}
-            <h3>{{ account.account_type }}: ${{ account.balance }}</h3>
+            <h3 onclick="window.location.href='/transaction_history'" onmouseover="" style="cursor: pointer;">{{ account.account_type }}: ${{ account.balance }}</h3>
         {% endfor %}
 
         

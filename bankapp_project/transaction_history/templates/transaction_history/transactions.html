@@ -1,0 +1,130 @@
+{% extends 'authentication_system/base.html' %}
+
+{% block title %} Transaction History {% endblock %}
+
+{% block content %}    
+
+    <h2>Transaction History for {{ selected.account_type }}</h2>
+
+    <form method="POST" action="{% url 'transaction_history' %}">
+        {% csrf_token %}
+        
+        <p>Select your account:</p>
+        {% for account in accounts %}
+            <input type="radio" id="{{ account.id }}" name="account select radio" value="{{ account.id }}">
+            <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
+        {% endfor %}
+
+        <input type="submit" value="Select">
+    </form>
+
+    <br></br>
+    
+    <table id="transaction table">
+        <tr>
+            <th onclick="sortTable(0, 'int')">ID</th>
+            <th onclick="sortTable(1)">Sender</th>
+            <th onclick="sortTable(2)">Receiver</th>
+            <th onclick="sortTable(3, 'float')">Amount</th>
+            <th onclick="sortTable(4)">Time</th>
+        </tr>
+
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.id }} </td>
+
+                {% if transaction.sender.user == user %}
+                    <td>Me</td>
+                    <td>{{ transaction.receiver.user.username }}</td>
+                {% else %}
+                    <td>{{ transaction.sender.user.username }}</td>
+                    <td>Me</td>
+                {% endif %}
+                
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.time }}</td>
+            </tr>
+        {% endfor%}
+
+    </table>
+
+
+
+    <script>
+        function sortTable(n, type="text") {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("transaction table");
+            switching = true;
+            
+            //Set the sorting direction to ascending:
+            dir = "asc"; 
+            
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    x = x.innerHTML.toLowerCase();
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    y = y.innerHTML.toLowerCase();
+
+
+                    // Convert x and y to the correct datatypes before comparing
+                    if (type == 'float')
+                    {
+                        x = parseFloat(x)
+                        y = parseFloat(y)
+                    }
+                    else if (type == 'int')
+                    {
+                        x = parseInt(x)
+                        y = parseInt(y)
+                    }
+                    
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if ((dir == "asc" && x > y) || (dir == "desc" && x < y)) 
+                    {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                    } 
+
+                }
+                if (shouldSwitch) 
+                {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount ++;      
+                } 
+                else 
+                {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") 
+                    {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+        
+
+{% endblock %}

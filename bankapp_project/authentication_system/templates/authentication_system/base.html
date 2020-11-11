@@ -31,7 +31,26 @@
 			margin-left:160px;
 			padding: 0px 10px;
 		}
-		
+
+		table {
+			border-spacing: 0;
+			width: 100%;
+			border: 1px solid #ddd;
+		}
+
+		th {
+  			cursor: pointer;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 16px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
+
     </style>
  
 	<meta charset="utf-8">
@@ -48,6 +67,7 @@
 			<a href="/">Home</a>
 			<a href="/balances">View Balances</a>
 			<a href="/send">Send Money</a>
+			<a href="/transaction_history">Transaction History</a>
 			<a href="/accounts/logout">Logout</a>
 		
 		{% else %}
