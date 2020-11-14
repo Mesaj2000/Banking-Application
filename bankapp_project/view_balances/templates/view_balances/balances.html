@@ -5,10 +5,11 @@
 {% block content %}    
     
     {% if user.is_authenticated %}
-        <h1>These are your balances, {{ user.username }}</h1>
+        <h2>Balances</h2>
+        <br>
 
         {% for account in accounts %}
-            <h3 onclick="window.location.href='/transaction_history'" onmouseover="" style="cursor: pointer;">{{ account.account_type }}: ${{ account.balance }}</h3>
+            <h4 onclick="window.location.href='/transaction_history'" onmouseover="" style="cursor: pointer;">{{ account.account_type }}: ${{ account.balance }}</h4>
         {% endfor %}
 
         

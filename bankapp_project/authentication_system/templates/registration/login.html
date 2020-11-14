@@ -2,19 +2,25 @@
 
 {% block title %} Login {% endblock %}
 
+<!-- Most of the heavy-lifting for this page is outsourced to the -->
+<!-- built-in Django authentication system, identified here as "form" -->
 {% block content %}
 
     <h2>Login</h2>
     <br>
 
+    <!-- Let the user know if the credentials are incorrect -->
     {% if form.errors %}
         <p>Invalid login</p>
     {% endif %}
 
+    <!-- Not entirely sure when this gets tripped, -->
+    <!-- but all the Django docs said to have it here ¯\_(ツ)_/¯ -->
     {% if next %}
         <p>Can't access that page</p>
     {% endif %}
 
+    <!-- Collect username and password, send it off to the Django auth system-->
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         

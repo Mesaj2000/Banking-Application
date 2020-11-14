@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
+# this is how Django knows which files are loaded to which URLs in the app.
+# this is the main urls.py for the whole project, so it has to include the
+# url files for all the other smaller segments
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication_system.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('view_balances.urls')),
     path('', include('send_money.urls')),
-    path('', include('transaction_history.urls'))
+    path('', include('transaction_history.urls')),
+    path('', include('settings_page.urls')),
+    path('', include('request_money.urls'))
 ]

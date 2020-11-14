@@ -1,14 +1,14 @@
 {% extends 'authentication_system/base.html' %}
 
-{% block title %} Send Money {% endblock %}
+{% block title %} Request Money {% endblock %}
 
 {% block content %}    
     
     {% if user.is_authenticated %}
     
-        <h2>Send money</h2>
+        <h2>Request money</h2>
 
-        <form method="POST" action="{% url 'send_money' %}">
+        <form method="POST" action="{% url 'request_money' %}">
             {% csrf_token %}
             
             <p>Enter target user:</p>
@@ -19,12 +19,14 @@
             <input type="text" name="amount field">
             <br></br>
 
+            <!--
             <p>Select your account from which you are sending:</p>
             {% for account in accounts %}
                 <input type="radio" id="{{ account.id }}" name="from account radio" value="{{ account.id }}">
                 <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
             {% endfor %}
             <br></br>
+            -->
 
 
             <input type="submit" value="Send">
@@ -45,7 +47,7 @@
 
     {% if sent %}
         <script>
-            alert("Transaction successful")
+            alert("Request Successful")
         </script>
     {% endif %}
 

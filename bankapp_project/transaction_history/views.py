@@ -8,21 +8,20 @@ def transaction_history(request, account_number=None):
     if not request.user.is_authenticated:
         return redirect('index')
 
-    accounts = Account.objects.filter(user=request.user)
+    accounts = Account.objects.filter(user=request.user).\
+        order_by('account_type', 'id')
 
     if request.method == "POST":
         try:
             account_number = request.POST.get('account select radio', None)
             account = Account.objects.get(user=request.user, id=account_number)
         except Exception as e:
-            account = Account.objects.get(user=request.user,
-                                          account_type="Checking")
+            account = accounts[0]
             print(e)
             print(account_number)
 
     else:
-        account = Account.objects.get(user=request.user,
-                                      account_type="Checking")
+        account = accounts[0]
 
     transactions = (Transaction.objects.filter(sender=account) |
                     Transaction.objects.filter(receiver=account))

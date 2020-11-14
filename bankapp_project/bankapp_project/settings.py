@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'view_balances',
     'send_money',
     'transaction_history',
+    'settings_page',
+    'request_money',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

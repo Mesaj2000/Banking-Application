@@ -1,0 +1,25 @@
+{% extends 'authentication_system/base.html' %}
+
+{% block title %} Settings {% endblock %}
+
+{% block content %}    
+
+    <h2>Settings</h2>
+
+    <h3>Your current preferred account is {{ preferred.account_type }}</h3>
+
+    <form method="POST" action="{% url 'settings_page' %}">
+        {% csrf_token %}
+        
+        <p>Select your preferred account:</p>
+        {% for account in accounts %}
+            <input type="radio" id="{{ account.id }}" name="account select radio" value="{{ account.id }}">
+            <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
+        {% endfor %}
+
+        <input type="submit" value="Select">
+    </form>
+
+    <br></br>
+
+{% endblock %}

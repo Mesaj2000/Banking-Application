@@ -22,6 +22,9 @@ def transaction(current_user, target_username, from_account_number, amount):
     if from_account.balance < amount:
         raise Exception("Insufficient funds")
 
+    if from_account == target_account:
+        raise Exception("Nebulous transaction ignored")
+
     from_account.balance -= amount
     target_account.balance += amount
     transaction = Transaction(sender=from_account, receiver=target_account,
@@ -36,7 +39,8 @@ def send_money(request):
     if not request.user.is_authenticated:
         return redirect('index')
 
-    accounts = Account.objects.filter(user=request.user)
+    accounts = Account.objects.filter(user=request.user).\
+        order_by('account_type', 'id')
 
     context = {
         'error': False,

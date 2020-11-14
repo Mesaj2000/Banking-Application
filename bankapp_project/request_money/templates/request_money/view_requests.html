@@ -1,14 +1,15 @@
 {% extends 'authentication_system/base.html' %}
 
-{% block title %} Transaction History {% endblock %}
+{% block title %} View Requests {% endblock %}
 
 {% block content %}    
 
-    <h2>Transaction History</h2>
+    <h2>View Requests</h2>
+    <!--
     <br>
     <h3>Select your account</h3>
 
-    <form method="POST" action="{% url 'transaction_history' %}">
+    <form method="POST" action="{% url 'view_requests' %}">
         {% csrf_token %}
         {% for account in accounts %}
             <input type="radio" id="{{ account.id }}" name="account select radio" value="{{ account.id }}">
@@ -21,37 +22,36 @@
     <br></br>
 
     <h3>{{ selected.account_type }}</h3>
+
+    -->
     
-    <table id="transaction table">
+    <table id="request table">
         <tr>
             <th onclick="sortTable(0, 'int')">ID</th>
-            <th onclick="sortTable(1)">Sender</th>
-            <th onclick="sortTable(2)">Receiver</th>
-            <th onclick="sortTable(3, 'float')">Amount</th>
-            <th onclick="sortTable(4)">Time</th>
+            <th onclick="sortTable(1)">Requester</th>
+            <th onclick="sortTable(2, 'float')">Amount</th>
+            <th onclick="sortTable(3)">Time</th>
+            <th>Delete?</th>
         </tr>
 
-        {% for transaction in transactions %}
+        {% for request in requests %}
             <tr>
-                <td>{{ transaction.id }} </td>
+                <td>{{ request.id }} </td>
 
-
-                {% if transaction.sender.user == user %}
+                {% if request.sender == user %}
                     <td>Me</td>
                 {% else %}
-                    <td>{{ transaction.sender.user.username }}</td>
-                {% endif %}
-
-                
-                {% if transaction.receiver.user == user %}
-                    <td>Me</td>
-                {% else %}
-                    <td>{{ transaction.receiver.user.username }}</td>
+                    <td>{{ request.sender.username }}</td>
                 {% endif %}
                 
+                <td>{{ request.amount }}</td>
+                <td>{{ request.time }}</td>
                 
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.time }}</td>
+                <td><form method="POST" action="{% url 'view_requests' %}">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" value="{{ request.id }}">X</button>
+                </form>
+                </td>
             </tr>
         {% endfor%}
 
@@ -62,7 +62,7 @@
     <script>
         function sortTable(n, type="text") {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            table = document.getElementById("transaction table");
+            table = document.getElementById("request table");
             switching = true;
             
             //Set the sorting direction to ascending:

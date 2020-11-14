@@ -2,13 +2,10 @@
 
 {% block title %} Front Page {% endblock %}
 
+<!-- Very simple front page-->
+<!-- Since the sidenav bar pretty much does everything the -->
+<!-- front page was supposed to do, there isn't really much to put here -->
+<!-- May put some user instructions here if I have the time -->
 {% block content %}    
-    {% if user.is_authenticated %}
         <h2>Hello, {{ user.username }}</h2>
-    
-    {% else %}
-        <h2><a href="/accounts/login">Please log in</a></h2>
-    
-    {% endif %}
-
 {% endblock %}

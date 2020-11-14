@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <title>Register</title>
-    </head>
-    <body>
-        <h1>Register New Account</h1>
-        <form method="post" action="{% url 'register' %}">
-            {% csrf_token %}
+{% extends 'authentication_system/base.html' %}
 
-            {% if form.errors %}
+{% block title %} Register {% endblock %}
+
+<!-- This page is not meant to be user-facing, -->
+<!-- which is why there isn't a link to it in the sidenav. -->
+<!-- I have it here for administrative purposes to add extra test accounts. -->
+{% block content %}
+    <h1>Register New Account</h1>
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        {% if form.errors %}
             <p>There are errors in the form</p>
-            {% endif %}
+        {% endif %}
 
-            {{ form }}
+        {{ form }}
 
-            <input type="submit" value="Register">
-        </form>
-    </body>
-</html>
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
