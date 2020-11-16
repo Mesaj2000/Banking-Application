@@ -8,6 +8,7 @@
 
     <h3>Your current preferred account is {{ preferred.account_type }}</h3>
 
+    <!-- Simple form; just a radio button for selecting which account you would like to be preferred -->
     <form method="POST" action="{% url 'settings_page' %}">
         {% csrf_token %}
         

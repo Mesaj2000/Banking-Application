@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+# This is the main project settings file
+# Most of this (including comments) comes with Django as-is
+# I commented all the stuff I added or changed
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +33,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# Must include al the apps that I created for the project (top 5)
 INSTALLED_APPS = [
     'authentication_system',
     'view_balances',
@@ -118,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# This defaults to UDT, but I set it to eastern
 TIME_ZONE = 'EST'
 
 USE_I18N = True
@@ -132,9 +137,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
+# Automatically redirect successful logins and 
+# successful logouts to the front page
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+# I couldn't find any documentation of this, but by trial and error
+# I determined that Django uses atypical formatting for times.
+# Namely, drop all the '%' symbols and %M --> i, %S --> s
 DATETIME_FORMAT = "Y-m-d H:i:s"

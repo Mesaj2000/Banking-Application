@@ -4,18 +4,14 @@
 
 {% block content %}    
     
-    {% if user.is_authenticated %}
-        <h2>Balances</h2>
-        <br>
+    <!-- Very simple static page -->
+    <h2>Balances</h2>
+    <br>
 
-        {% for account in accounts %}
-            <h4 onclick="window.location.href='/transaction_history'" onmouseover="" style="cursor: pointer;">{{ account.account_type }}: ${{ account.balance }}</h4>
-        {% endfor %}
-
-        
-    {% else %}
-        <h1><a href="/accounts/login">Please log in first</a></h1>
-    
-    {% endif %}
+    <!-- For each account, display the type and balance -->
+    <!-- Clicking on an account redirects to the transaction history -->
+    {% for account in accounts %}
+        <h4 onclick="window.location.href='/transaction_history'" onmouseover="" style="cursor: pointer;">{{ account.account_type }}: ${{ account.balance }}</h4>
+    {% endfor %}
 
 {% endblock %}

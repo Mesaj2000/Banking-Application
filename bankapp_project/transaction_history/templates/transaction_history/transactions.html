@@ -6,24 +6,26 @@
 
     <h2>Transaction History</h2>
     <br>
-    <h3>Select your account</h3>
 
+    <!-- Provide the user with the opportunity to select which account
+        the transaction history of which will be presented in the table -->
+    <h3>Select your account</h3>
     <form method="POST" action="{% url 'transaction_history' %}">
         {% csrf_token %}
         {% for account in accounts %}
             <input type="radio" id="{{ account.id }}" name="account select radio" value="{{ account.id }}">
             <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
         {% endfor %}
-
         <input type="submit" value="Select">
     </form>
 
     <br></br>
 
+    <!-- The table that displays all the transactions -->
     <h3>{{ selected.account_type }}</h3>
-    
     <table id="transaction table">
         <tr>
+            <!-- Sort the table according to the column header when clicked -->
             <th onclick="sortTable(0, 'int')">ID</th>
             <th onclick="sortTable(1)">Sender</th>
             <th onclick="sortTable(2)">Receiver</th>
@@ -35,14 +37,14 @@
             <tr>
                 <td>{{ transaction.id }} </td>
 
-
+                <!-- If the user is the sender, display "Me" instead of their username -->
                 {% if transaction.sender.user == user %}
                     <td>Me</td>
                 {% else %}
                     <td>{{ transaction.sender.user.username }}</td>
                 {% endif %}
 
-                
+                <!-- If the user is the receiver, display "Me" instead of their username -->
                 {% if transaction.receiver.user == user %}
                     <td>Me</td>
                 {% else %}
@@ -58,7 +60,13 @@
     </table>
 
 
-
+    <!-- This script takes the text data loaded into the table and sorts it directly 
+        in the page, no additional requests needed. It is a slightly modified version
+        of the second one found here: https://www.w3schools.com/howto/howto_js_sort_table.asp.
+        It's a pretty straight-forward bubble sort, though it does change how it compares
+        the values based on if they're text, ints, or floats. The format I selected
+        for datetimes is the ISO standard specifically so that I can sort them here
+        as text and have that be the same as sorting in time order. -->
     <script>
         function sortTable(n, type="text") {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

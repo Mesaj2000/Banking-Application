@@ -2,30 +2,17 @@
 
 {% block title %} View Requests {% endblock %}
 
+<!-- Similarly to how "request_money.html" was cannibalized from "send_money.html", 
+    this page was cannibalized from "transactions.html" -->
 {% block content %}    
-
     <h2>View Requests</h2>
-    <!--
-    <br>
-    <h3>Select your account</h3>
 
-    <form method="POST" action="{% url 'view_requests' %}">
-        {% csrf_token %}
-        {% for account in accounts %}
-            <input type="radio" id="{{ account.id }}" name="account select radio" value="{{ account.id }}">
-            <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
-        {% endfor %}
-
-        <input type="submit" value="Select">
-    </form>
-
-    <br></br>
-
-    <h3>{{ selected.account_type }}</h3>
-
-    -->
-    
+    <!-- Other than the header above, the only thing on this page is the requests table -->
     <table id="request table">
+
+        <!-- The headers on the table call the sortTable() function when clicked
+            in order to sort the table according to that column. The exception
+            to this is the "Delete?" header, since that column has buttons, not data -->
         <tr>
             <th onclick="sortTable(0, 'int')">ID</th>
             <th onclick="sortTable(1)">Requester</th>
@@ -34,19 +21,30 @@
             <th>Delete?</th>
         </tr>
 
+        <!-- Django iterates across each of the requests, and fills this into the html for each -->
         {% for request in requests %}
+            <!-- Each request gets its own row in the table -->
             <tr>
+                <!-- First the unique request ID-->
                 <td>{{ request.id }} </td>
 
+                <!-- Since you can technically request yourself for money,
+                    rather than listing your own username, it just says "Me".
+                    This is mainly just to be consistent with the transaction 
+                    history table, wherein you must be on every row of the table. -->
                 {% if request.sender == user %}
                     <td>Me</td>
                 {% else %}
                     <td>{{ request.sender.username }}</td>
                 {% endif %}
                 
+                <!-- Finish out the request info with the amout and the timestamp -->
                 <td>{{ request.amount }}</td>
                 <td>{{ request.time }}</td>
                 
+                <!-- Each request also comes with a button. When pressed, it sends 
+                    a post request containing the id of the selected request with
+                    the name "delete", so that the system knows which one you're deleting.-->
                 <td><form method="POST" action="{% url 'view_requests' %}">
                     {% csrf_token %}
                     <button type="submit" name="delete" value="{{ request.id }}">X</button>
@@ -58,7 +56,13 @@
     </table>
 
 
-
+    <!-- This script takes the text data loaded into the table and sorts it directly 
+        in the page, no additional requests needed. It is a slightly modified version
+        of the second one found here: https://www.w3schools.com/howto/howto_js_sort_table.asp.
+        It's a pretty straight-forward bubble sort, though it does change how it compares
+        the values based on if they're text, ints, or floats. The format I selected
+        for datetimes is the ISO standard specifically so that I can sort them here
+        as text and have that be the same as sorting in time order. -->
     <script>
         function sortTable(n, type="text") {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

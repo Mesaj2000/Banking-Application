@@ -4,45 +4,45 @@
 
 {% block content %}    
     
-    {% if user.is_authenticated %}
-    
-        <h2>Send money</h2>
+    <h2>Send money</h2>
 
-        <form method="POST" action="{% url 'send_money' %}">
-            {% csrf_token %}
-            
-            <p>Enter target user:</p>
-            <input type="text" name="target user field" label="test">
-            <br></br>
-            
-            <p>Enter amount:</p>
-            <input type="text" name="amount field">
-            <br></br>
+    <form method="POST" action="{% url 'send_money' %}">
+        {% csrf_token %}
+        
+        <!-- Text field for user to enter whom they are sending money to -->
+        <p>Enter target user:</p>
+        <input type="text" name="target user field" label="test">
+        <br></br>
+        
+        <!-- Text field for user to enter how much money they are sending -->
+        <p>Enter amount:</p>
+        <input type="text" name="amount field">
+        <br></br>
 
-            <p>Select your account from which you are sending:</p>
-            {% for account in accounts %}
-                <input type="radio" id="{{ account.id }}" name="from account radio" value="{{ account.id }}">
-                <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
-            {% endfor %}
-            <br></br>
-
-
-            <input type="submit" value="Send">
-        </form>
+        <!-- Radio buttons for selecting which account you're sending money from -->
+        <p>Select your account from which you are sending:</p>
+        {% for account in accounts %}
+            <input type="radio" id="{{ account.id }}" name="from account radio" value="{{ account.id }}">
+            <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
+        {% endfor %}
+        <br></br>
 
 
-    {% else %}
-        <h1><a href="/accounts/login">Please log in first</a></h1>
-    
-    {% endif %}
+        <input type="submit" value="Send">
+    </form>
 
 
+    <!-- Notify the user in the event of an error -->
+    <!-- Main purpose: they have insufficient funds or entered an invalid target user -->
+    <!-- Bonus: It also tells me, the developer/tester, any errors that pop up while testing -->
     {% if error %}
         <script>
             alert("Error: {{ error_message }}");
         </script>
     {% endif %}
 
+    <!-- Should pop up any time there are no errors -->
+    <!-- It's just nice to get some feedback so you know everything went smoothly -->
     {% if sent %}
         <script>
             alert("Transaction successful")

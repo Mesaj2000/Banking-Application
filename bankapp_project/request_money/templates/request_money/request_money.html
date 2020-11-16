@@ -2,49 +2,37 @@
 
 {% block title %} Request Money {% endblock %}
 
-{% block content %}    
-    
-    {% if user.is_authenticated %}
-    
-        <h2>Request money</h2>
+{% block content %}        
+    <h2>Request money</h2>
 
-        <form method="POST" action="{% url 'request_money' %}">
-            {% csrf_token %}
-            
-            <p>Enter target user:</p>
-            <input type="text" name="target user field" label="test">
-            <br></br>
-            
-            <p>Enter amount:</p>
-            <input type="text" name="amount field">
-            <br></br>
+    <!-- This is nearly identical to "send_money" (which I did first), just without -->
+    <!-- the buttons to select the "from account". -->
+    <!-- Pretty much this whole document was canabalized from that one-->
+    <form method="POST" action="{% url 'request_money' %}">
+        {% csrf_token %}
+        
+        <p>Enter target user:</p>
+        <input type="text" name="target user field" label="test">
+        <br></br>
+        
+        <p>Enter amount:</p>
+        <input type="text" name="amount field">
+        <br></br>
 
-            <!--
-            <p>Select your account from which you are sending:</p>
-            {% for account in accounts %}
-                <input type="radio" id="{{ account.id }}" name="from account radio" value="{{ account.id }}">
-                <label for="{{ account.id }}">{{ account.account_type }}: ${{ account.balance }}</label><br>
-            {% endfor %}
-            <br></br>
-            -->
+        <input type="submit" value="Send">
+    </form>
 
-
-            <input type="submit" value="Send">
-        </form>
-
-
-    {% else %}
-        <h1><a href="/accounts/login">Please log in first</a></h1>
-    
-    {% endif %}
-
-
+    <!-- Notify the user in the event of an error -->
+    <!-- Main purpose: they entered an invalid target user -->
+    <!-- Bonus: It also tells me, the developer/tester, any errors that pop up while testing -->
     {% if error %}
         <script>
             alert("Error: {{ error_message }}");
         </script>
     {% endif %}
 
+    <!-- Should pop up any time there are no errors -->
+    <!-- It's just nice to get some feedback so you know everything went smoothly -->
     {% if sent %}
         <script>
             alert("Request Successful")
