@@ -65,6 +65,8 @@ def transaction(current_user, target_username, from_account_number, amount):
 
 # Loads the view for the user to see with all relevant 
 # informtion for sending money
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def send_money(request):
     # As always, if the user isn't logged in, redirect them to login
     if not request.user.is_authenticated:

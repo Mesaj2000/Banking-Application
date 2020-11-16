@@ -4,12 +4,17 @@ from enum import Enum
 
 
 # There are only two account types: Checking and Savings
+# This inherits from the Enum class, which is how you make an Enum in python
 class Account_Type(Enum):
     CHECKING = "Checking"
     SAVINGS = "Savings"
 
 
-# An account database entry has:
+# A bank account database entry
+# Each user has multiple accouts, one of which is preferred
+# Each transaction has two accounts, a sender and a receiver
+# As this is a database entry for a Django web application,
+#   it inherits from the models.Model class in Django.
 class Account(models.Model):
     # The user who owns the account
     user = models.ForeignKey(User, on_delete=models.CASCADE)

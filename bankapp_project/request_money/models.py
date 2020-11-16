@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 #   the USER the request was made to
 #   the timestamp of when the request was made
 #   the amount of money the request is for
+# As this is a database entry for a Django web application,
+#   it inherits from the models.Model class in Django.
 class Request(models.Model):
     sender = models.ForeignKey(User, related_name='sender',
                                on_delete=models.CASCADE)

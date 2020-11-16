@@ -4,7 +4,9 @@ from .models import Transaction
 from view_balances.models import Account
 
 
-def transaction_history(request, account_number=None):
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
+def transaction_history(request):
     # As always, redirect to login if the user isn't logged in
     if not request.user.is_authenticated:
         return redirect('index')

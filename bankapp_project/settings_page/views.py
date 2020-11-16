@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from view_balances.models import Account
 
-
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def settings_page(request):
     # As always, redirect if the user isn't logged in
     if not request.user.is_authenticated:

@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 
 # Simply renders the index.html page
 # Since the index is static, no context is needed
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -13,8 +15,10 @@ def index(request):
 
 
 # For GET requests, simply create a UserCreationForm and renders it.
-# For POST requests, take the input from the UserCreationForm and extract 
+# For POST requests, take the input from the UserCreationForm and extract
 # out the login credentials. If they are valid, the user logs into the system.
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def register(request):
     if request.method == 'POST':
         # Load user's form info that they sent in the post

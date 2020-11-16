@@ -30,6 +30,8 @@ def make_request(current_user, target_username, amount):
 
 
 # Renders the "request money" page, and processes user input
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def request_money(request):
     # As always, redirect elsewhere if the user isn't logged in
     if not request.user.is_authenticated:
@@ -75,6 +77,8 @@ def request_money(request):
 
 
 # Renders the "view requests" page, and processes user input
+# The "request" parameter is the HTTP request recieved from the user's device
+# The return value is a rendering of the page, an HttpResponse python object
 def view_requests(request, account_number=None):
     # As always, redirect elsewhere if the user isn't logged in
     if not request.user.is_authenticated:
