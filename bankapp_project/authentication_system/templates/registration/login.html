@@ -11,13 +11,17 @@
 
     <!-- Let the user know if the credentials are incorrect -->
     {% if form.errors %}
-        <p>Invalid login</p>
+        <script>
+            alert("Error: Invalid Login")
+        </script>
     {% endif %}
 
     <!-- Not entirely sure when this gets tripped, -->
     <!-- but all the Django docs said to have it here ¯\_(ツ)_/¯ -->
     {% if next %}
-        <p>Can't access that page</p>
+        <script>
+            alert("Error: Can't access that page")
+        </script>
     {% endif %}
 
     <!-- Collect username and password, send it off to the Django auth system-->

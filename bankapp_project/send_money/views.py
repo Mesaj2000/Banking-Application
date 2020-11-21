@@ -38,6 +38,8 @@ def transaction(current_user, target_username, from_account_number, amount):
     # If the entered amount isn't valid, inform the user of the error.
     try:
         amount = Decimal(amount)
+        if amount < 0 or (amount * 100) % 1 > 0:
+            raise Exception()
     except Exception:
         raise Exception("Invalid entered amount")
 
@@ -63,7 +65,7 @@ def transaction(current_user, target_username, from_account_number, amount):
     transaction.save()
 
 
-# Loads the view for the user to see with all relevant 
+# Loads the view for the user to see with all relevant
 # informtion for sending money
 # The "request" parameter is the HTTP request recieved from the user's device
 # The return value is a rendering of the page, an HttpResponse python object

@@ -4,8 +4,56 @@
 
 <!-- Very simple front page-->
 <!-- Since the sidenav bar pretty much does everything the -->
-<!-- front page was supposed to do, there isn't really much to put here -->
-<!-- May put some user instructions here if I have the time -->
+<!-- front page was supposed to do, I instead opted to put -->
+<!-- instructions for users here. -->
 {% block content %}    
-        <h2>Hello, {{ user.username }}</h2>
+        <h3>Welcome to BankApp</h3>
+        <p>
+                BankApp is a banking application you can use to send money to your friends, or request and receive money from them. In this guide, we will cover all the things you need to know to use BankApp.
+        </p>
+        <h3>Getting Started</h3>        
+        <p>
+                To access BankApp, you can navigate to 127.0.0.1:8000 in your favorite internet browser. Since you will not be logged in, you will be automatically redirected to the login screen. Here, you will enter your username and password and click the “Log In” button. This will bring you to the front page of the app. You will see a greeting and the navigation bar on the left side of the screen.
+        </p>
+
+        <h3>Using the Navigation Bar</h3>
+        <p>
+                To navigate between the features of BankApp, simply click on the name of the desired feature in the navigation bar on the left side of the screen. Each of the following sections of this guide detail what you will see and how to interact with each of these features.
+        </p>
+
+        <h3>View Balances</h3>
+        <p>
+                In the View Balances screen, you will see the outstanding balances of your Checking and Savings accounts. Clicking on either of these accounts will take you the the Transaction History screen, just the same as selecting “Transaction History” on the navigation bar.
+        </p>
+        
+        <h3>Send Money</h3>
+        <p>
+                You can send money to other BankApp users from the Send Money screen. To do so, enter the username of the desired recipient in the first entry box, the amount of money which you would like to send in the second entry box, and click on the radio button whichever of your accounts you would like for the money to be sent from. When you type into the entry boxes, make sure you spell the username of the recipient correctly, and that the amount of money you send has no additional symbols beyond numerals and (optionally) a single period. If you include a period, make sure not to enter more than two digits thereafter.
+        </p>
+
+        <h3>Transaction History</h3>
+        <p>
+                From the Transaction History screen, you can see every transaction in or out of any of your accounts. By default, you will see the transactions for your checking account, but you can change this by pressing a different account in the radio menu and pressing “Select”; this will update the table. You can also click on the column headers in the table to sort the table by the data in that column.
+        </p>
+
+        <h3>Request Money</h3>
+        <p>
+                If you wish to request money from another user, you can do so in the “Request Money” view. Simply enter the user’s username and your desired amount of money in exactly the same manner as in “Send Money”, and press “Request”. They will be able to see your request in the “View Requests” screen the next time they log in. 
+        </p>
+
+        <h3>View Requests</h3>
+        <p>
+                To view outstanding requests that other users have made of you, vist the “View Requests” screen. Here you will see a table containing the Request ID, the user who made the request, the amount of money they are requesting, and the time and date they made the request. Each request also has a button labeled ‘X’ in the “Delete?” column; you can click this button to delete the request once you’re done with it. To fulfil a request, enter the information listed in the “Requester” and “Amount” columns in the “Send Money” page.
+        </p>
+
+        <h3>Settings</h3>
+        <p>
+                Whenever a user sends you money, the money is automatically entered into your “Preferred Account”. By default this is your checking account. You can view your currently-preferred account, and change it to a different account if you wish, from the “Settings” page. Simply select the desired account in the radio menu and press “Select”.
+        </p>
+
+        <h3>Logout</h3>
+        <p>
+                When you press the “Logout” button in the navigation bar, you will be logged out and redirected back to the login screen.
+        </p>
+
 {% endblock %}

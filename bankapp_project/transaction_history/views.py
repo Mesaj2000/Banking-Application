@@ -37,6 +37,8 @@ def transaction_history(request):
     transactions = (Transaction.objects.filter(sender=account) |
                     Transaction.objects.filter(receiver=account))
 
+    transactions = transactions.order_by('id')
+
     # Gather all relevant information...
     context = {
         'selected': account,

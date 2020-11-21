@@ -18,6 +18,8 @@ def make_request(current_user, target_username, amount):
     # Make sure the entered amount is a valid number
     try:
         amount = Decimal(amount)
+        if amount < 0 or (amount * 100) % 1 > 0:
+            raise Exception()
     except Exception:
         raise Exception("Invalid entered amount")
 
@@ -110,7 +112,7 @@ def view_requests(request, account_number=None):
             print(e)
 
     # Get all the requests made TO the currently logged-in user
-    requests = Request.objects.filter(receiver=request.user)
+    requests = Request.objects.filter(receiver=request.user).order_by('id')
 
     # Render the page with those requests in the table
     context = {'requests': requests}

@@ -29,8 +29,7 @@ SECRET_KEY = '%t0!@8qjooyxtsgj%wi9-x!3&yj+1(&c_2l(-q6s#p+*(0%y*f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 # Must include al the apps that I created for the project (top 5)
@@ -83,6 +82,8 @@ WSGI_APPLICATION = 'bankapp_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+"""
+# PostgreSQL Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -91,6 +92,25 @@ DATABASES = {
         'PASSWORD': 'g5NkyQcctFDtOUb-dsSkotutOHmCk6gK',
         'HOST': 'lallah.db.elephantsql.com',
         'PORT': '5432'
+    }
+}
+"""
+"""
+# Windows Database Schema
+DATABASES = {
+    # SQLite Database
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+"""
+# Linux Database Schema
+DATABASES = {
+    # SQLite Database
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -137,7 +157,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Automatically redirect successful logins and 
+# Automatically redirect successful logins and
 # successful logouts to the front page
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

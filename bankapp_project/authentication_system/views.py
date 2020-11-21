@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from view_balances.models import Account
 
 
 # Simply renders the index.html page
@@ -35,6 +36,16 @@ def register(request):
             # Validate the credentials, and log in if they're correct
             user = authenticate(username=username, password=password)
             login(request, user)
+
+            # Generate a new checking account and savings account for the user
+            checking = Account(user=user, balance=100,
+                               preferred=True, account_type="Checking")
+            savings = Account(user=user, balance=100,
+                              preferred=False, account_type="Savings")
+
+            # Save the new accounts to the database
+            checking.save()
+            savings.save()
 
             # Redirect to the front page
             return redirect('index')
